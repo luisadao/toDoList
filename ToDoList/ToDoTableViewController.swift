@@ -7,6 +7,8 @@ class ToDoTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.register(ToDoCell.self, forCellReuseIdentifier: "ToDoCell")
+        
         if let toDoList = toDoList{
             navigationItem.title = toDoList.title
         }else{
@@ -28,6 +30,26 @@ class ToDoTableViewController: UITableViewController {
         cell.contentConfiguration = content
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+            let selectedToDo = toDos[indexPath.row]
+            let detailVC = storyboard?.instantiateViewController(withIdentifier: "ToDoDetailViewController") as! ToDoDetailViewController
+            
+            // Pass the selected ToDo and ToDoList to the detail view controller
+            detailVC.toDo = selectedToDo
+            detailVC.toDoList = toDoList // Pass the entire ToDoList
+
+            // If you want to update the ToDoList after the user modifies a ToDo
+            detailVC.updateHandler = { updatedToDo in
+                if let index = self.toDos.firstIndex(where: { $0.id == updatedToDo.id }) {
+                    self.toDoList.toDo[index] = updatedToDo
+                    ToDoList.saveToDoLists([self.toDoList])
+                    self.tableView.reloadData()
+                }
+            }
+
+            navigationController?.pushViewController(detailVC, animated: true)
+        }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
@@ -60,4 +82,16 @@ class ToDoTableViewController: UITableViewController {
         
         present(alertController, animated: true)
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
+
+        if segue.identifier == "showToDoDetail" {
+            guard let toDoDetailVC = segue.destination as? ToDoDetailViewController,
+                  let indexPath = tableView.indexPathForSelectedRow else { return }
+
+            toDoDetailVC.toDo = toDoList.toDo[indexPath.row]
+        }
+    }
+
 }

@@ -6,6 +6,8 @@ class ToDoListsTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.register(UINib(nibName: "ToDoListCell", bundle: nil), forCellReuseIdentifier: "ToDoListCell")
+
         
         // Load saved ToDoLists
         if let savedToDoLists = ToDoList.loadToDoLists() {
@@ -20,18 +22,23 @@ class ToDoListsTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoListCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoListCell", for: indexPath) as! ToDoListCell
         let toDoList = toDoLists[indexPath.row]
-        cell.textLabel?.text = toDoList.title
+
+        // Configure the cell
+        cell.titleLabel.text = toDoList.title
+        // Optionally, configure other UI elements in the cell
         return cell
     }
+
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedList = toDoLists[indexPath.row]
-        let detailVC = storyboard?.instantiateViewController(withIdentifier: "ToDoTableViewController") as! ToDoTableViewController
-        detailVC.toDoList = selectedList
-        navigationController?.pushViewController(detailVC, animated: true)
+        let selectedToDoList = toDoLists[indexPath.row]
+        let toDoTableVC = storyboard?.instantiateViewController(withIdentifier: "ToDoTableViewController") as! ToDoTableViewController
+        toDoTableVC.toDoList = selectedToDoList // Assign the selected ToDoList
+        navigationController?.pushViewController(toDoTableVC, animated: true)
     }
+
     
     @IBAction func addToDoList(_ sender: UIBarButtonItem) {
         let alertController = UIAlertController(title: "New ToDo List", message: "Enter the name of the new list", preferredStyle: .alert)
@@ -58,12 +65,10 @@ class ToDoListsTableViewController: UITableViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showToDoList" {
-            if let destinationVC = segue.destination as? ToDoTableViewController,
-               let indexPath = tableView.indexPathForSelectedRow{
-                let selectedList = toDoLists[indexPath.row]
-                destinationVC.toDoList = selectedList
-            }
+        if let toDoTableVC = segue.destination as? ToDoTableViewController,
+           let indexPath = tableView.indexPathForSelectedRow {
+            let selectedToDoList = toDoLists[indexPath.row]
+            toDoTableVC.toDoList = selectedToDoList // Pass the selected ToDoList
         }
     }
 
