@@ -9,31 +9,38 @@ import Foundation
 struct ToDoList: Codable, Equatable {
     let id: UUID
     var title: String
-    var toDo: [ToDo]
+    var toDo: [ToDo] = []
     
     init(title: String, toDo: [ToDo] = []) {
         self.id = UUID()
         self.title = title
         self.toDo = toDo
     }
-    
-    static let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-    static let archiveURL = documentsDirectory.appendingPathComponent("toDoLists").appendingPathExtension("plist")
-    
-    static func saveToDoLists(_ toDoLists: [ToDoList]) {
-        let encoder = PropertyListEncoder()
-        if let data = try? encoder.encode(toDoLists) {
-            try? data.write(to: archiveURL, options: .noFileProtection)
+        
+        static let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        static let archiveURL = documentsDirectory.appendingPathComponent("toDoLists").appendingPathExtension("plist")
+        
+    // Save all ToDoLists to UserDefaults or a file
+        static func saveToDoLists(_ toDoLists: [ToDoList]) {
+            do {
+                let data = try JSONEncoder().encode(toDoLists)
+                UserDefaults.standard.set(data, forKey: "ToDoLists")
+            } catch {
+                print("Failed to save ToDoLists: \(error)")
+            }
         }
-    }
-    
-    static func loadToDoLists() -> [ToDoList]? {
-        if let data = try? Data(contentsOf: archiveURL) {
-            let decoder = PropertyListDecoder()
-            return try? decoder.decode([ToDoList].self, from: data)
+        
+        // Load all ToDoLists from UserDefaults or a file
+        static func loadToDoLists() -> [ToDoList]? {
+            guard let data = UserDefaults.standard.data(forKey: "ToDoLists") else { return nil }
+            do {
+                let toDoLists = try JSONDecoder().decode([ToDoList].self, from: data)
+                return toDoLists
+            } catch {
+                print("Failed to load ToDoLists: \(error)")
+                return nil
+            }
         }
-        return nil
-    }
     
     static func loadSampleToDoLists() -> [ToDoList] {
             let toDo1 = ToDoList(title: "Work Tasks", toDo: [

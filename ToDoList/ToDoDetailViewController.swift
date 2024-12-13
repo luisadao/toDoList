@@ -11,13 +11,43 @@ class ToDoDetailViewController: UITableViewController {
 
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var isCompleteSwitch: UISwitch!
-    @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var notesTextView: UITextView!
     @IBOutlet weak var dueDateDatePicker: UIDatePicker!
 
     @IBOutlet weak var dueDatePickerLabel: UILabel!
     
+
+    @IBAction func saveButton(_ sender: UIButton) {
+        guard let title = titleTextField.text, !title.isEmpty else {
+                    let alert = UIAlertController(title: "Invalid Input", message: "Please enter a title for the task.", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default))
+                    present(alert, animated: true)
+                    return
+                }
+                
+                let isComplete = isCompleteSwitch.isOn
+                let dueDate = dueDateDatePicker.date
+                let notes = notesTextView.text
+                
+                if var toDo = toDo {
+                    toDo.title = title
+                    toDo.isComplete = isComplete
+                    toDo.dueDate = dueDate
+                    toDo.notes = notes
+                    updateHandler?(toDo)
+                } else {
+                    let newToDo = ToDo(title: title, isComplete: isComplete, dueDate: dueDate, notes: notes)
+                    updateHandler?(newToDo)
+                }
+                
+                performSegue(withIdentifier: "saveUnwind", sender: self)
+            }
+        
+
+    
     @IBOutlet weak var isCompletedLabel: UILabel!
+    weak var delegate: ToDoDetailViewControllerDelegate?
+
     var toDo: ToDo? // The current ToDo being edited
     var toDoList: ToDoList! // The ToDoList this ToDo belongs to
     var updateHandler: ((ToDo) -> Void)? // Closure to update the ToDo in the list
@@ -44,7 +74,6 @@ class ToDoDetailViewController: UITableViewController {
         
         dueDateDatePicker.date = currentDueDate
         updateDueDateLabel(date: currentDueDate)
-        updateSaveButtonState()
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -52,50 +81,35 @@ class ToDoDetailViewController: UITableViewController {
 
         guard segue.identifier == "saveUnwind" else { return }
 
-        let title = titleTextField.text!
+        // Get updated values from the UI
+        let title = titleTextField.text ?? ""
         let isComplete = isCompleteSwitch.isOn
         let dueDate = dueDateDatePicker.date
-        let notes = notesTextView.text
-        
-        // If editing an existing ToDo, update it; otherwise, create a new one
-        if toDo != nil {
-            toDo?.title = title
-            toDo?.isComplete = isComplete
-            toDo?.dueDate = dueDate
-            toDo?.notes = notes
-        } else {
-            toDo = ToDo(title: title, isComplete: isComplete, dueDate: dueDate, notes: notes)
-        }
+        let notes = notesTextView.text ?? ""
 
-        // Update the ToDo in the ToDoList (via the updateHandler closure)
-        if let updatedToDo = toDo {
-            updateHandler?(updatedToDo)
+        // Update existing ToDo or create a new one
+        if var toDo = toDo {
+            // Update the existing ToDo
+            toDo.title = title
+            toDo.isComplete = isComplete
+            toDo.dueDate = dueDate
+            toDo.notes = notes
+
+            // Call the update handler to notify the parent view controller
+            updateHandler?(toDo)
         }
     }
+
 
     func updateDueDateLabel(date: Date) {
-        dueDatePickerLabel.text = date.formatted(.dateTime.month(.defaultDigits).day().year(.twoDigits).hour().minute())
-    }
-
-    func updateSaveButtonState() {
-        // Save button is enabled only when title text is not empty
-        let shouldEnableSaveButton = titleTextField.text?.isEmpty == false
-        saveButton.isEnabled = shouldEnableSaveButton
-    }
-
-    @IBAction func textEditingChanged(_ sender: UITextField) {
-        updateSaveButtonState()
+        //dueDatePickerLabel.text = date.formatted(.dateTime.month(.defaultDigits).day().year(.twoDigits).hour().minute())
     }
 
     @IBAction func returnPressed(_ sender: UITextField) {
         sender.resignFirstResponder()
     }
 
-    @IBAction func isCompleteButtonTapped(_ sender: UISwitch) {
-        // No need to manually toggle UISwitch since it's state is stored in isCompleteSwitch.isOn
-        updateSaveButtonState()
-    }
-
+  
     @IBAction func datePickerChanged(_ sender: UIDatePicker) {
         updateDueDateLabel(date: sender.date)
     }
@@ -131,4 +145,6 @@ class ToDoDetailViewController: UITableViewController {
             tableView.endUpdates()
         }
     }
+    
+    
 }

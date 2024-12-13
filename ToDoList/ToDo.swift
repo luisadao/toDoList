@@ -25,16 +25,25 @@ struct ToDo: Equatable, Codable {
     static let archiveURL = documentsDirectory.appendingPathComponent("toDos").appendingPathExtension("plist")
     
     static func saveToDos(_ toDos: [ToDo]) {
-        let propertyListEncoder = PropertyListEncoder()
-        let codedToDos = try? propertyListEncoder.encode(toDos)
-        try? codedToDos?.write(to: archiveURL, options: .noFileProtection)
-    }
-    
-    static func loadToDos() -> [ToDo]?  {
-        guard let codedToDos = try? Data(contentsOf: archiveURL) else {return nil}
-        let propertyListDecoder = PropertyListDecoder()
-        return try? propertyListDecoder.decode(Array<ToDo>.self, from: codedToDos)
-    }
+            do {
+                let data = try JSONEncoder().encode(toDos)
+                UserDefaults.standard.set(data, forKey: "ToDos")
+            } catch {
+                print("Failed to save ToDos: \(error)")
+            }
+        }
+        
+        // Load ToDos from UserDefaults or a file
+        static func loadToDos() -> [ToDo]? {
+            guard let data = UserDefaults.standard.data(forKey: "ToDos") else { return nil }
+            do {
+                let toDos = try JSONDecoder().decode([ToDo].self, from: data)
+                return toDos
+            } catch {
+                print("Failed to load ToDos: \(error)")
+                return nil
+            }
+        }
     
     static func loadSampleToDos() -> [ToDo] {
         let toDo1 = ToDo(title: "To-Do One", isComplete: false, dueDate: Date(), notes: "Notes 1")

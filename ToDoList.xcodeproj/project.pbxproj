@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 55;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -11,6 +11,14 @@
 		2C0881842D0B97D500C98A9B /* ToDoListsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0881832D0B97D500C98A9B /* ToDoListsTableViewController.swift */; };
 		CE89A5CB2D0BBE5B002F295D /* ToDoListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE89A5C92D0BBE5B002F295D /* ToDoListCell.swift */; };
 		CE89A5CC2D0BBE5B002F295D /* ToDoListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE89A5CA2D0BBE5B002F295D /* ToDoListCell.xib */; };
+		CED8D0B12D0C30C500821490 /* ToDoDetailViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED8D0B02D0C30C500821490 /* ToDoDetailViewControllerDelegate.swift */; };
+		CED8D0B32D0C4C2D00821490 /* ToDoListDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED8D0B22D0C4C2D00821490 /* ToDoListDetailViewController.swift */; };
+		CED8D0B82D0C7A2300821490 /* Auth in Frameworks */ = {isa = PBXBuildFile; productRef = CED8D0B72D0C7A2300821490 /* Auth */; };
+		CED8D0BA2D0C7A2300821490 /* Functions in Frameworks */ = {isa = PBXBuildFile; productRef = CED8D0B92D0C7A2300821490 /* Functions */; };
+		CED8D0BC2D0C7A2300821490 /* PostgREST in Frameworks */ = {isa = PBXBuildFile; productRef = CED8D0BB2D0C7A2300821490 /* PostgREST */; };
+		CED8D0BE2D0C7A2300821490 /* Realtime in Frameworks */ = {isa = PBXBuildFile; productRef = CED8D0BD2D0C7A2300821490 /* Realtime */; };
+		CED8D0C02D0C7A2300821490 /* Storage in Frameworks */ = {isa = PBXBuildFile; productRef = CED8D0BF2D0C7A2300821490 /* Storage */; };
+		CED8D0C22D0C7A2300821490 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = CED8D0C12D0C7A2300821490 /* Supabase */; };
 		F774948C26DEC8F6002B5883 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F774948B26DEC8F6002B5883 /* AppDelegate.swift */; };
 		F774948E26DEC8F6002B5883 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F774948D26DEC8F6002B5883 /* SceneDelegate.swift */; };
 		F774949326DEC8F6002B5883 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F774949126DEC8F6002B5883 /* Main.storyboard */; };
@@ -27,6 +35,8 @@
 		2C0881832D0B97D500C98A9B /* ToDoListsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListsTableViewController.swift; sourceTree = "<group>"; };
 		CE89A5C92D0BBE5B002F295D /* ToDoListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListCell.swift; sourceTree = "<group>"; };
 		CE89A5CA2D0BBE5B002F295D /* ToDoListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ToDoListCell.xib; sourceTree = "<group>"; };
+		CED8D0B02D0C30C500821490 /* ToDoDetailViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoDetailViewControllerDelegate.swift; sourceTree = "<group>"; };
+		CED8D0B22D0C4C2D00821490 /* ToDoListDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListDetailViewController.swift; sourceTree = "<group>"; };
 		F774948826DEC8F6002B5883 /* ToDoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F774948B26DEC8F6002B5883 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F774948D26DEC8F6002B5883 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -45,6 +55,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CED8D0BC2D0C7A2300821490 /* PostgREST in Frameworks */,
+				CED8D0BA2D0C7A2300821490 /* Functions in Frameworks */,
+				CED8D0C22D0C7A2300821490 /* Supabase in Frameworks */,
+				CED8D0B82D0C7A2300821490 /* Auth in Frameworks */,
+				CED8D0C02D0C7A2300821490 /* Storage in Frameworks */,
+				CED8D0BE2D0C7A2300821490 /* Realtime in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,6 +100,8 @@
 				F774949926DEC8F8002B5883 /* Info.plist */,
 				CE89A5C92D0BBE5B002F295D /* ToDoListCell.swift */,
 				CE89A5CA2D0BBE5B002F295D /* ToDoListCell.xib */,
+				CED8D0B02D0C30C500821490 /* ToDoDetailViewControllerDelegate.swift */,
+				CED8D0B22D0C4C2D00821490 /* ToDoListDetailViewController.swift */,
 			);
 			path = ToDoList;
 			sourceTree = "<group>";
@@ -132,6 +150,9 @@
 				Base,
 			);
 			mainGroup = F774947F26DEC8F5002B5883;
+			packageReferences = (
+				CED8D0B62D0C7A2300821490 /* XCLocalSwiftPackageReference "../../Downloads/supabase-swift-2.24.0" */,
+			);
 			productRefGroup = F774948926DEC8F6002B5883 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -160,12 +181,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CED8D0B32D0C4C2D00821490 /* ToDoListDetailViewController.swift in Sources */,
 				F77494A026DED1F2002B5883 /* ToDo.swift in Sources */,
 				F77494A626DFD684002B5883 /* ToDoCell.swift in Sources */,
 				CE89A5CB2D0BBE5B002F295D /* ToDoListCell.swift in Sources */,
 				F77494A426DEF22D002B5883 /* ToDoDetailViewController.swift in Sources */,
 				2C0881812D0B968C00C98A9B /* ToDoList.swift in Sources */,
 				F77494A226DED23D002B5883 /* ToDoTableViewController.swift in Sources */,
+				CED8D0B12D0C30C500821490 /* ToDoDetailViewControllerDelegate.swift in Sources */,
 				2C0881842D0B97D500C98A9B /* ToDoListsTableViewController.swift in Sources */,
 				F774948C26DEC8F6002B5883 /* AppDelegate.swift in Sources */,
 				F774948E26DEC8F6002B5883 /* SceneDelegate.swift in Sources */,
@@ -386,6 +409,40 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		CED8D0B62D0C7A2300821490 /* XCLocalSwiftPackageReference "../../Downloads/supabase-swift-2.24.0" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "../../Downloads/supabase-swift-2.24.0";
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		CED8D0B72D0C7A2300821490 /* Auth */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Auth;
+		};
+		CED8D0B92D0C7A2300821490 /* Functions */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Functions;
+		};
+		CED8D0BB2D0C7A2300821490 /* PostgREST */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PostgREST;
+		};
+		CED8D0BD2D0C7A2300821490 /* Realtime */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Realtime;
+		};
+		CED8D0BF2D0C7A2300821490 /* Storage */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Storage;
+		};
+		CED8D0C12D0C7A2300821490 /* Supabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Supabase;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = F774948026DEC8F5002B5883 /* Project object */;
 }

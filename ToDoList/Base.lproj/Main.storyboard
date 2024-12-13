@@ -42,6 +42,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="+"/>
+                                <connections>
+                                    <action selector="addToDoList:" destination="s49-sK-RQh" eventType="touchUpInside" id="xEp-qM-jSU"/>
+                                </connections>
                             </button>
                         </barButtonItem>
                     </navigationItem>
@@ -78,11 +81,14 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="LEa-lB-JlX">
                         <barButtonItem key="rightBarButtonItem" style="plain" id="iIl-gg-EtX">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="QNe-IQ-gSY">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="QNe-IQ-gSY">
                                 <rect key="frame" x="288" y="5" width="86" height="34.333333333333336"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="+"/>
+                                <connections>
+                                    <action selector="addToDoItem:" destination="9Rp-CG-sla" eventType="touchUpInside" id="HJ9-oO-eWy"/>
+                                </connections>
                             </button>
                         </barButtonItem>
                     </navigationItem>
@@ -155,7 +161,12 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="7NN-Hs-WrP">
-                        <barButtonItem key="rightBarButtonItem" title="Save" id="ex4-RX-1Z0"/>
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="ex4-RX-1Z0">
+                            <connections>
+                                <action selector="saveButton:" destination="c4g-po-SkP" id="Mqo-Jc-aXH"/>
+                                <segue destination="k03-HO-BBD" kind="unwind" identifier="saveUnwind" unwindAction="unwindToToDoTableWithSegue:" id="hJk-oz-St1"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="dueDateDatePicker" destination="oZ9-PR-iRA" id="8vq-rI-3k0"/>
@@ -163,11 +174,11 @@
                         <outlet property="isCompleteSwitch" destination="PXO-PV-noq" id="6h9-M6-u4G"/>
                         <outlet property="isCompletedLabel" destination="P1u-2C-0ty" id="EZS-PJ-VQS"/>
                         <outlet property="notesTextView" destination="uWz-JL-2HN" id="WM9-tR-4aO"/>
-                        <outlet property="saveButton" destination="ex4-RX-1Z0" id="nc5-Pw-rcW"/>
                         <outlet property="titleTextField" destination="0pO-tt-1tk" id="Myj-Xe-KVz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="83E-0j-ung" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="k03-HO-BBD" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="4336.9230769230771" y="-527.48815165876772"/>
         </scene>
@@ -213,7 +224,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="MRE-0L-APP"/>
+        <segue reference="cdq-7G-eA1"/>
     </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="labelColor">
